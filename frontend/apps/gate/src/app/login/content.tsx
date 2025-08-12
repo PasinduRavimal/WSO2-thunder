@@ -36,7 +36,7 @@ interface LoginInput {
 
 const LoginPageContent = function (): ReactElement {
   const [sessionDataKey, setSessionDataKey] = useState<string>('');
-  const [appId, setAppId] = useState<string>('');
+  const [_appId, setAppId] = useState<string>('');
   const [insecureWarning, setInsecureWarning] = useState<boolean>(false);
   const [flowId, setFlowId] = useState<string>('');
   const [inputs, setInputs] = useState<LoginInput[]>([]);
@@ -55,8 +55,7 @@ const LoginPageContent = function (): ReactElement {
     setInsecureWarning(params.get('showInsecureWarning') === 'true');
 
     if (key) {
-      axios
-        .post(
+      axios.post(
           AppConfig.flowExecutionEndpoint,
           { applicationId: appId, flowType: 'AUTHENTICATION' },
           {
@@ -81,19 +80,19 @@ const LoginPageContent = function (): ReactElement {
     }
   }, []);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
   };
 
-  const handleTogglePasswordVisibility = () => {
+  const handleTogglePasswordVisibility = (): void => {
     setShowPassword(prev => !prev);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent): Promise<any> => {
     e.preventDefault();
     setError('');
-    let currentFlowId = flowId;
-    let currentInputs = formValues;
+    const currentFlowId = flowId;
+    const currentInputs = formValues;
     let continueFlow = true;
     while (continueFlow) {
       try {
@@ -154,7 +153,7 @@ const LoginPageContent = function (): ReactElement {
           continueFlow = false; // Stop loop, wait for user to submit again
           setError(''); // Clear any previous error
         }
-      } catch (err) {
+      } catch (_err) {
         setError('Failed to authenticate.');
         continueFlow = false;
       }

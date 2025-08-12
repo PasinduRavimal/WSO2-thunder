@@ -73,10 +73,8 @@ const baseConfigs = [
       ],
       '@typescript-eslint/typedef': 'off',
       // TODO: Temporarily disable this rule until the plugin 
-      '@typescript-eslint/no-unused-vars': 'off', // Disable unused-vars
-      '@typescript-eslint/explicit-function-return-type': 'off', // Disable return type checks
-      'prefer-const': 'off', // Disable prefer-const rule
       // false positives are resolved
+      'no-unused-vars': ['error', { 'argsIgnorePattern': '^_' }]
       'headers/header-format': 'off'
     }
   },
